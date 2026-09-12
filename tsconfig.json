@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"]
+}
+EOFls -l
+src/
+touch .github/workflows/check.ymlcat << 'EOF' > ptsconfig.jsonackage.json
+{
+  "name": "gibflow-bountyops",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "demo": "tsx src/demo.ts",
+    "gibflow": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@gibwork/sdk": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
