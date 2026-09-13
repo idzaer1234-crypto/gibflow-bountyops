@@ -1,9 +1,12 @@
 {
   "name": "gibflow-bountyops",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "description": "Terminal-first GitHub Issue to Gibwork bounty planning and validation workflow.",
   "type": "module",
+  "engines": { "node": ">=22" },
   "scripts": {
     "check": "tsc --noEmit",
+    "test": "tsx tests/planner.test.ts",
     "demo": "tsx src/demo.ts",
     "gibflow": "tsx src/cli.ts"
   },
