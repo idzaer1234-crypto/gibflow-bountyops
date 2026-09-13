@@ -22,9 +22,22 @@ export async function getIssue(repo: string, issueNumber: number): Promise<GitHu
     throw new Error(`GitHub API error ${response.status}: ${detail.slice(0, 300)}`);
   }
 
-  const data = (await response.json()) as GitHubIssue;
-  if (!data.html_url || !data.title || !data.repository?.full_name) {
+  const data = (await response.json()) as GitHubIssue & {
+    repository_url?: string;
+  };
+
+  if (!data.html_url || !data.title) {
     throw new Error("GitHub returned an incomplete issue payload.");
   }
-  return data;
+
+  // GitHub's Issue endpoint does not guarantee an embedded `repository` object.
+  // Normalize it from the requested repo so the rest of GibFlow has a stable shape.
+  const fullName = data.repository?.full_name ?? repo;
+
+  return {
+    ...data,
+    body: data.body ?? null,
+    labels: Array.isArray(data.labels) ? data.labels : [],
+    repository: { full_name: fullName }
+  };
 }
