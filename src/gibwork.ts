@@ -1,9 +1,27 @@
-import { createGibworkClient } from "@gibwork/sdk";
 import type { BountyPlan } from "./types.js";
 
-export async function createBounty(plan: BountyPlan) {
-  // หมายเหตุ: ในโหมดจริงต้องใช้ Private Key จาก Environment
-  // แต่สำหรับการส่ง Hackathon เราเน้นโชว์โครงสร้างการเชื่อมต่อ
-  console.log("Connecting to Gibwork SDK with plan:", plan.title);
-  return { success: true, task: "Bounty created successfully" };
+/**
+ * Converts our internal plan into the shape expected by @gibwork/sdk task creation.
+ * This function is intentionally side-effect free: the hackathon demo never signs
+ * or broadcasts a transaction.
+ */
+export function toGibworkTaskInput(plan: BountyPlan) {
+  return {
+    title: plan.title,
+    content: plan.content,
+    tags: plan.tags,
+    payment: { amount: plan.amount },
+    sourceIssue: plan.sourceIssue
+  };
+}
+
+export function dryRunCreateBounty(plan: BountyPlan) {
+  return {
+    mode: "dry-run" as const,
+    provider: "@gibwork/sdk",
+    operation: "tasks.create",
+    request: toGibworkTaskInput(plan),
+    signed: false,
+    broadcast: false
+  };
 }
