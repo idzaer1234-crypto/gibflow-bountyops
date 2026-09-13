@@ -6,7 +6,7 @@
   "engines": { "node": ">=22" },
   "scripts": {
     "check": "tsc --noEmit",
-    "test": "tsx tests/planner.test.ts",
+    "test": "tsx tests/planner.test.ts && tsx tests/validator.test.ts",
     "demo": "tsx src/demo.ts",
     "gibflow": "tsx src/cli.ts"
   },
