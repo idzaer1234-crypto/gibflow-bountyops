@@ -13,4 +13,6 @@ export type BountyPlan = {
   tags: string[];
   amount: string;
   sourceIssue: string;
+  sourceRepository: string;
+  issueNumber: number;
 };
